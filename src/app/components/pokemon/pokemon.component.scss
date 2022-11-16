@@ -95,6 +95,10 @@
     margin: 0 auto;
   }
 
+  & h3 {
+    text-transform: capitalize;
+  }
+
   & p {
     opacity: 0;
     transition: opacity .3s ease-out;
