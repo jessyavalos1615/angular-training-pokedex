@@ -1,0 +1,75 @@
+form {
+  min-width: 300px;
+  max-width: 30%;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 2rem 3rem;
+  margin-top: 10rem;
+
+  margin: 50px auto 20px;
+
+  border-radius: 2.5rem;
+  background-color: #ecf0f3;
+
+  color: black;
+
+  & input {
+    display: block;
+    margin: 3rem 0;
+    width: 90%;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    border: none;
+    box-shadow: inset -5px -5px 15px rgba(255, 255, 255, 0.8),
+      inset 5px 5px 10px rgba(0, 0, 0, 0.1);
+    border: 0 none;
+    background: #ebf5fc;
+
+    &:focus-visible {
+      outline: unset;
+    }
+  }
+
+  & label {
+    color: darkgrey;
+
+    position: absolute;
+    transform: translate(17px, 15px);
+    transition: all 0.3s ease-in-out;
+
+    &.active {
+      color: #000000;
+      transform: translate(0, -30px);
+    }
+  }
+
+  & span {
+    position: absolute;
+    font-size: 13px;
+    color: red;
+
+    transition: all 0.3s ease-in-out;
+
+    transform: translate(15px, -40px);
+  }
+
+  & button {
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    border: none;
+    font-size: 0.875rem;
+    color: #ffffff;
+    font-weight: bold;
+    background-color: #e3350d;
+    width: 100%;
+    display: block;
+    padding: 0.875rem 1rem;
+    border-radius: 1.5rem;
+    box-shadow: 3px 3px 8px #b1b1b1, -3px -3px 8px #ffffff;
+    cursor: pointer;
+  }
+
+  & a {
+    text-decoration: none;
+    color: #e3350d;
+  }
+}

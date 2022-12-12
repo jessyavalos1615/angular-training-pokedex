@@ -5,6 +5,8 @@
 export const environment = {
   production: false,
   POKEMON_BASE_URL: 'https://pokeapi.co/api/v2',
+  loginUrl: 'http://localhost:3000/',
+  jwtKey: 'JWToken',
 };
 
 /*

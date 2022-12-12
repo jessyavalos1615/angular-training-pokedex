@@ -1,0 +1,46 @@
+form {
+  display: flex;
+  flex-direction: column;
+
+  & div {
+    margin-bottom: 20px;
+  }
+
+  & input, & select {
+    display: block;
+    width: -webkit-fill-available;
+    margin: 15px 0;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    border: none;
+    box-shadow: inset -5px -5px 15px rgba(255, 255, 255, 0.8),
+      inset 5px 5px 10px rgba(0, 0, 0, 0.1);
+    border: 0 none;
+    background: #ebf5fc;
+
+    &:focus-visible {
+      outline: unset;
+    }
+  }
+
+  & span {
+    font-size: 13px;
+    color: red;
+  }
+}
+
+button {
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  border: none;
+  font-size: 0.875rem;
+  color: #ffffff;
+  font-weight: bold;
+  background-color: #e3350d;
+  width: 100%;
+  display: block;
+  padding: 0.875rem 1rem;
+  border-radius: 1.5rem;
+  box-shadow: 3px 3px 8px #b1b1b1, -3px -3px 8px #ffffff;
+  cursor: pointer;
+}

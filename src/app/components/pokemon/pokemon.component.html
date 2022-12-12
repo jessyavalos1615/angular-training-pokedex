@@ -1,4 +1,5 @@
 <div [class]="'box show ' + pokemon.types[0].type.name" [class.show]="show" (click)="toggleShow()">
+  <span *ngIf="isAdmin" (click)="delete(pokemon.idService)" >Delete</span>
   <img [src]="pokemon.sprites.front_default" alt="Pokemon" />
   <h3>{{ pokemon.name }}</h3>
   <p><b>Type: </b> {{ pokemon.types[0].type.name }}</p>

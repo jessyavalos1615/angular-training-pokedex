@@ -1,0 +1,35 @@
+<form [formGroup]="signupForm" (ngSubmit)="signup()">
+    <h2 class="title">Sign Up</h2>
+    <div>
+        <label for="name" [ngClass]="{'active': name.value !== ''}">Name</label>
+        <input id="name" type="text" name="name" formControlName="name" />
+        <span *ngIf="name.errors?.['required']">
+            Name is required
+        </span>
+    </div>
+    <div>
+        <label for="lastName" [ngClass]="{'active': lastName.value !== ''}">Last Name</label>
+        <input id="lastName" type="text" name="lastName" formControlName="lastName" />
+        <span *ngIf="lastName.errors?.['required']">
+            Last Name is required
+        </span>
+    </div>
+    <div>
+        <label for="email" [ngClass]="{'active': email.value !== ''}">Email</label>
+        <input id="email" type="email" name="email" formControlName="email" />
+        <span *ngIf="email.errors?.['required']">
+            Email is required
+        </span>
+        <span *ngIf="email.errors?.['email']">
+            Please add a valid email
+        </span>
+    </div>
+    <div>
+        <label for="password" [ngClass]="{'active': password.value !== ''}">Password</label>
+        <input id="password" type="password" name="password" formControlName="password" />
+        <span *ngIf="password.errors?.['required']">
+            Password is required
+        </span>
+    </div>
+    <button type="submit" (click)="signup()">Sign up</button>
+</form>

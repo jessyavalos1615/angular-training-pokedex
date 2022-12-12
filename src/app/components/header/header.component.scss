@@ -1,12 +1,42 @@
 header {
-    padding: 20px 0;
-    text-align: center;
-    background-color: #E3350D;
-    margin-bottom: 15px;
-}
+  display: flex;
 
-header h1 {
-    text-transform: uppercase;
-    color: white;
+  padding: 20px;
+  margin-bottom: 15px;
+
+  background-color: #e3350d;
+
+  text-align: center;
+
+  & h1 {
     letter-spacing: 3px;
+
+    color: white;
+
+    text-transform: uppercase;
+  }
+
+  & button {
+    display: block;
+
+    width: fit-content;
+    padding: 0.875rem 1rem;
+
+    background-color: #fff;
+
+    font-size: 0.875rem;
+    font-weight: bold;
+    letter-spacing: 0.15em;
+    color: #000;
+    text-transform: uppercase;
+
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:first-of-type {
+      margin-left: auto;
+      margin-right: 15px;
+    }
+  }
 }

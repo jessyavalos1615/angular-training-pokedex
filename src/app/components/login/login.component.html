@@ -1,0 +1,27 @@
+<form [formGroup]="loginForm" (ngSubmit)="login()">
+    <h2 class="title">Sign In</h2>
+    <div>
+        <label for="email" [ngClass]="{'active': email.value !== ''}">Email</label>
+        <input id="email" type="email" name="email" formControlName="email" />
+        <span *ngIf="email.errors?.['required']">
+            Email is required
+        </span>
+        <span *ngIf="email.errors?.['email']">
+            Please add a valid email
+        </span>
+    </div>
+    <div>
+        <label for="password" [ngClass]="{'active': password.value !== ''}">Password</label>
+        <input id="password" type="password" name="password" formControlName="password" />
+        <span *ngIf="password.errors?.['required']">
+            Password is required
+        </span>
+    </div>
+    <button type="submit" (click)="login()">Log in</button>
+    <span class="register-span">
+        Don't have an account yet?
+        <a routerLink="/signup" routerLinkActive="active">
+            <b>Click here</b>
+        </a>
+    </span>
+</form>

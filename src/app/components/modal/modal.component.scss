@@ -1,0 +1,56 @@
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 250ms ease;
+
+  &.show {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  & .modal-container {
+    max-width: 40rem;
+    max-height: 32rem;
+    width: 90%;
+
+    margin: auto;
+    padding: 20px;
+
+    border: unset;
+    border-radius: 15px;
+
+    background-color: white;
+
+    user-select: none;
+
+    overflow-y: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    & .modal-header {
+      display: flex;
+      align-items: center;
+
+      & span {
+        margin-left: auto;
+
+        & img {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,54 @@
+<app-modal title="Add Pokemon" [show]="show">
+    <form [formGroup]="addPokemonForm" (ngSubmit)="addPokemon()" body>
+        <div>
+            <label for="pokemon-name" [ngClass]="{'active': name?.value !== ''}">Pokemons's Name</label>
+            <input type="text" name="name" id="pokemon-name" formControlName="name">
+            <span *ngIf="name?.errors?.['required']">
+                Pokemon's name is required
+            </span>
+        </div>
+        <div>
+            <label for="pokemon-height" [ngClass]="{'active': height?.value !== ''}">Pokemons's Height</label>
+            <input type="number" name="height" id="pokemon-height" min="0" formControlName="height">
+            <span *ngIf="height?.errors?.['min']">
+                The height of a pokemon must be greater than 0.
+            </span>
+        </div>
+        <div>
+            <label for="pokemon-weight" [ngClass]="{'active': weight?.value !== ''}">Pokemons's Weight</label>
+            <input type="number" name="weight" id="pokemon-weight" min="0" formControlName="weight">
+            <span *ngIf="weight?.errors?.['min']">
+                The weight of a pokemon must be greater than 0.
+            </span>
+        </div>
+        <div>
+            <label for="pokemon-experience" [ngClass]="{'active': experience?.value !== ''}">Pokemons's Base
+                experience</label>
+            <input type="number" name="experience" id="pokemon-experience" min="0" formControlName="experience">
+            <span *ngIf="experience?.errors?.['min']">
+                The base experience of a pokemon must be greater than 0.
+            </span>
+        </div>
+        <div>
+            <label for="pokemon-type" [ngClass]="{'active': type?.value !== ''}">Pokemons's Type</label>
+            <select name="type" id="pokemon-type" formControlName="type">
+                <option *ngFor='let type of pokemonTypes' [value]="type">{{type}}</option>
+            </select>
+        </div>
+        <div>
+            <label for="pokemon-secondary-type" [ngClass]="{'active': secondaryType?.value !== ''}">Pokemons's Secondary Type</label>
+            <select name="secondaryType" id="pokemon-secondary-experience" formControlName="secondaryType">
+                <option value="">Select Secondary Type</option>
+                <option *ngFor='let type of pokemonTypes' [value]="type">{{type}}</option>
+            </select>
+            <span *ngIf="isSameType">
+                Please choose a type other than the first chosen.
+            </span>
+        </div>
+    </form>
+    <div class="footer" footer>
+        <button (click)="addPokemon()">
+            Add
+        </button>
+    </div>
+</app-modal>

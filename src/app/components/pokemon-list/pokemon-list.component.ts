@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+
 import { DataService } from 'src/app/services/data.service';
+import { PokemonService } from 'src/app/services/pokemon.service';
 
 @Component({
   selector: 'app-pokemon-list',
@@ -7,18 +9,20 @@ import { DataService } from 'src/app/services/data.service';
   styleUrls: ['./pokemon-list.component.scss'],
 })
 export class PokemonListComponent implements OnInit {
-  pokemons: any[] = [];
-  page = 1;
+  page: number = 1;
+  pokemons: any = [];
   totalPokemons: number = 0;
 
-  constructor(private dataService: DataService) {}
+  constructor(
+    private dataService: DataService,
+    private pokemonService: PokemonService
+  ) {}
 
   ngOnInit(): void {
-    console.log('ngOnInit');
     this.getPokemons();
   }
 
-  ngOnChanges(): void {
+  /* ngOnChanges(): void {
     console.log('ngOnChanges');
   }
 
@@ -44,17 +48,16 @@ export class PokemonListComponent implements OnInit {
   
   ngOnDestroy(): void {
     console.log('ngOnDestroy');
-  }
+  } */
 
   // Get Pokemons
-  getPokemons() {
-    this.dataService.getPokemons(10, this.page).subscribe((data: any) => {
-      this.totalPokemons = data.count;
-
-      data.results.forEach((result: any) => {
-        this.dataService.getMoreData(result.name).subscribe((pokemon: any) => {
-          this.pokemons.push(pokemon);
-        });
+  async getPokemons() {
+    const response = await this.pokemonService.getPokemons(this.page);
+    this.totalPokemons = response.totalPages * 10;
+    response.pokemons.forEach((pokemonResponse: any) => {
+      const idService = pokemonResponse.id;
+      this.dataService.getMoreData(pokemonResponse.name).subscribe((pokemon: any) => {
+        this.pokemons.push({idService, ...pokemon});
       });
     });
   }
