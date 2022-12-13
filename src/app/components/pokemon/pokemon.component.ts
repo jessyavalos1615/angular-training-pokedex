@@ -19,38 +19,7 @@ export class PokemonComponent implements OnInit {
 
   ngOnInit(): void {
     this.isAdmin = this.authService.checkAdmin();
-    if (this.pokemon.name === 'ivysaur') {
-      console.log(this.pokemon)
-    }
   }
-
-  /* ngOnChanges(): void {
-    console.log('ngOnChanges');
-  }
-
-  ngDoCheck(): void {
-    console.log('ngDoCheck');
-  }
-
-  ngAfterContentInit(): void {
-    console.log('ngAfterContentInit');
-  }
-
-  ngAfterContentChecked(): void {
-    console.log('ngAfterContentChecked');
-  }
-
-  ngAfterViewInit(): void {
-    console.log('ngAfterViewInit');
-  }
-
-  ngAfterViewChecked(): void {
-    console.log('ngAfterViewChecked');
-  }
- 
-  ngOnDestroy(): void {
-    console.log('ngOnDestroy');
-  }*/
 
   async delete(id: string): Promise<void> {
     await this.pokemonService.delete(id);

@@ -1,6 +1,9 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AddPokemonComponent } from './add-pokemon.component';
+import { ModalComponent } from '../modal/modal.component';
 
 describe('AddPokemonComponent', () => {
   let component: AddPokemonComponent;
@@ -8,9 +11,9 @@ describe('AddPokemonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddPokemonComponent ]
-    })
-    .compileComponents();
+      imports: [HttpClientModule, ReactiveFormsModule],
+      declarations: [AddPokemonComponent, ModalComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AddPokemonComponent);
     component = fixture.componentInstance;

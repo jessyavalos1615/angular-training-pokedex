@@ -1,11 +1,21 @@
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
+import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
+import { HeaderComponent } from './components/header/header.component';
+import { HeadersInterceptor } from './interceptors/headers.interceptors';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
+      imports: [HttpClientModule, RouterModule.forRoot([])],
+      declarations: [AppComponent, HeaderComponent],
+      providers: [
+        {
+          provide: HTTP_INTERCEPTORS,
+          useClass: HeadersInterceptor,
+          multi: true,
+        },
       ],
     }).compileComponents();
   });
@@ -20,12 +30,5 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app.title).toEqual('pokedex');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('pokedex app is running!');
   });
 });
