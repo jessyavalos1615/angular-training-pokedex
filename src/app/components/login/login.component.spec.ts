@@ -1,7 +1,7 @@
+import { RouterModule } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
 
 import { LoginComponent } from './login.component';
 

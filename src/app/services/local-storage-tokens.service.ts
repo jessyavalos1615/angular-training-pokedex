@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -18,6 +19,7 @@ export class LocalStorageService {
   get(key: string): string | null {
     return localStorage.getItem(key);
   }
+
   add(key: string, value: string): void {
     localStorage.setItem(key, value);
   }

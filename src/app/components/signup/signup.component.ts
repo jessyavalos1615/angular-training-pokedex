@@ -10,8 +10,8 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./signup.component.scss'],
 })
 export class SignupComponent implements OnInit {
-  public signupForm: FormGroup;
   user = new User();
+  public signupForm: FormGroup;
 
   constructor(private authService: AuthService) {
     this.signupForm = new FormGroup({

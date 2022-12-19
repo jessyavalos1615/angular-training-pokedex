@@ -1,6 +1,9 @@
+import { Store } from '@ngrx/store';
 import { Component, Input, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+
 import { PokemonService } from 'src/app/services/pokemon.service';
+import { loginStateTypes } from 'src/app/store/initialState/login/login.state';
+
 @Component({
   selector: 'app-pokemon',
   templateUrl: './pokemon.component.html',
@@ -10,16 +13,17 @@ export class PokemonComponent implements OnInit {
   @Input() pokemon: any;
   show: boolean = false;
   isAdmin: boolean = false;
+
   constructor(
-    private authService: AuthService,
     private pokemonService: PokemonService,
+    private store: Store<{ loginState: loginStateTypes }>
   ) {
-    this.isAdmin = this.authService.checkAdmin();
+    this.store.select('loginState').subscribe((state) => {
+      this.isAdmin = state.isAdmin;
+    });
   }
 
-  ngOnInit(): void {
-    this.isAdmin = this.authService.checkAdmin();
-  }
+  ngOnInit(): void {}
 
   async delete(id: string): Promise<void> {
     await this.pokemonService.delete(id);

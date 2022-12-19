@@ -1,7 +1,8 @@
+import { Store } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';
 
-import { DataService } from 'src/app/services/data.service';
 import { PokemonService } from 'src/app/services/pokemon.service';
+import { pokemonStateTypes } from '../../store/initialState/pokemon/pokemon.state';
 
 @Component({
   selector: 'app-pokemon-list',
@@ -10,55 +11,28 @@ import { PokemonService } from 'src/app/services/pokemon.service';
 })
 export class PokemonListComponent implements OnInit {
   page: number = 1;
-  pokemons: any = [];
+  pokemons: any[] = [];
   totalPokemons: number = 0;
+  hasPokemons: boolean = false;
 
   constructor(
-    private dataService: DataService,
-    private pokemonService: PokemonService
-  ) {}
+    private pokemonService: PokemonService,
+    private store: Store<{ pokemonState: pokemonStateTypes }>
+  ) {
+    this.store.select('pokemonState').subscribe((state) => {
+      this.pokemons = state.pokemons;
+      this.totalPokemons = state.total;
+      this.hasPokemons = state.pokemons.length > 0;
+    });
+  }
 
   ngOnInit(): void {
     this.getPokemons();
+    console.log(this.totalPokemons);
   }
-
-  /* ngOnChanges(): void {
-    console.log('ngOnChanges');
-  }
-
-  ngDoCheck(): void {
-    console.log('ngDoCheck');
-  }
-
-  ngAfterContentInit(): void {
-    console.log('ngAfterContentInit');
-  }
-
-  ngAfterContentChecked(): void {
-    console.log('ngAfterContentChecked');
-  }
-  
-  ngAfterViewInit(): void {
-    console.log('ngAfterViewInit');
-  }
-  
-  ngAfterViewChecked(): void {
-    console.log('ngAfterViewChecked');
-  }
-  
-  ngOnDestroy(): void {
-    console.log('ngOnDestroy');
-  } */
 
   // Get Pokemons
   async getPokemons() {
-    const response = await this.pokemonService.getPokemons(this.page);
-    this.totalPokemons = response.totalPages * 10;
-    response.pokemons.forEach((pokemonResponse: any) => {
-      const idService = pokemonResponse.id;
-      this.dataService.getMoreData(pokemonResponse.name).subscribe((pokemon: any) => {
-        this.pokemons.push({idService, ...pokemon});
-      });
-    });
+    await this.pokemonService.getPokemons(this.page);
   }
 }

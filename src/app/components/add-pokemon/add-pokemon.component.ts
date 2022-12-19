@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+
 import { PokemonService } from 'src/app/services/pokemon.service';
 import { ShowModalService } from 'src/app/services/show-modal.service';
 
@@ -10,8 +10,8 @@ import { ShowModalService } from 'src/app/services/show-modal.service';
   styleUrls: ['./add-pokemon.component.scss'],
 })
 export class AddPokemonComponent implements OnInit {
-  addPokemonForm: FormGroup;
   show: boolean = false;
+  addPokemonForm: FormGroup;
   isSameType: boolean = false;
   pokemonTypes = [
     'Normal',
@@ -35,7 +35,6 @@ export class AddPokemonComponent implements OnInit {
   ];
 
   constructor(
-    private router: Router,
     private showModal: ShowModalService,
     private pokemonService: PokemonService,
   ) {

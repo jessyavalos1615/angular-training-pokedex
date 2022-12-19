@@ -1,7 +1,7 @@
 import { Response } from "./api";
 
 export interface User {
-  _id?: string;
+  id?: string;
   name: string;
   lastName: string;
   role: string;

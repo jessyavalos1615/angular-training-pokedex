@@ -1,7 +1,7 @@
-import { HttpClientModule } from '@angular/common/http';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PokemonComponent } from './pokemon.component';
 
