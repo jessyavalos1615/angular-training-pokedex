@@ -1,17 +1,17 @@
-import jwt_decode from 'jwt-decode';
+import { Store } from '@ngrx/store';
+import { firstValueFrom } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { catchError } from 'rxjs/operators';
-import { firstValueFrom, throwError } from 'rxjs';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { User } from '../models/user';
 import { UsersService } from './users.service';
 import { ErrorService } from './error.service';
-import { ErrorResponse } from '../models/errors';
-import { ActivatedRoute, Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
-import { LocalStorageService } from './local-storage-tokens.service';
 import { LoginResponse } from '../models/login';
+import { ErrorResponse } from '../models/errors';
+import { environment } from 'src/environments/environment';
+import { login } from '../store/actions/login/login.actions';
+import { loginStateTypes } from '../store/initialState/login/login.state';
 
 @Injectable({
   providedIn: 'root',
@@ -21,38 +21,13 @@ export class AuthService {
   private path = `${environment.loginUrl}api/auth`;
 
   constructor(
-    private http: HttpClient,
-    private localStorage: LocalStorageService,
-    private route: ActivatedRoute,
     private router: Router,
+    private http: HttpClient,
+    private route: ActivatedRoute,
+    private userService: UsersService,
     private errorHandler: ErrorService,
-    private userService: UsersService
-  ) {
-    if (this.isLoggedIn()) {
-      this.user = this.decodeToken(this.localStorage.getToken() ?? '');
-    }
-  }
-
-  isLoggedIn() {
-    return !!this.localStorage.getToken();
-  }
-
-  logout() {
-    this.localStorage.delete(environment.jwtKey);
-    this.router.navigateByUrl('/login');
-  }
-
-  checkAdmin(): boolean {
-    return this.user?.role === 'ADMIN';
-  }
-
-  decodeToken(token: string): any {
-    try {
-      return jwt_decode(token);
-    } catch (Error) {
-      return null;
-    }
-  }
+    private store: Store<{ loginState: loginStateTypes }>
+  ) {}
 
   async login(email: string, password: string) {
     const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
@@ -60,8 +35,9 @@ export class AuthService {
       const { token, user } = (await firstValueFrom(
         this.http.post(this.path, { email, password })
       )) as LoginResponse;
-      this.localStorage.add(environment.jwtKey, token);
-      this.user = user;
+      this.store.dispatch(
+        login({ user, token, isLogin: true, isAdmin: user.role === 'ADMIN' })
+      );
       this.router.navigateByUrl(returnUrl);
     } catch (err) {
       this.errorHandler.handleError(err as ErrorResponse);
@@ -71,8 +47,10 @@ export class AuthService {
   async register(user: User) {
     try {
       const { token } = await this.userService.createUser(user);
-      this.localStorage.add(environment.jwtKey, token);
-      this.user = { ...user, password: '' };
+      user = { ...user, password: '' };
+      this.store.dispatch(
+        login({ user, token, isLogin: true, isAdmin: user.role === 'ADMIN' })
+      );
       this.router.navigateByUrl('pokemons');
     } catch (err) {
       this.errorHandler.handleError(err as ErrorResponse);

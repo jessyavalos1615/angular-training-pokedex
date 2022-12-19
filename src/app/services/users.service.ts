@@ -1,11 +1,6 @@
-import {
-  HttpClient,
-  HttpParams,
-  HttpParamsOptions,
-} from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { firstValueFrom, Observable } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { ErrorService } from './error.service';
 import { ErrorResponse } from 'src/app/models/errors';
@@ -16,9 +11,10 @@ import { ApiUserPostReponse, ApiUserResponse, User } from '../models/user';
   providedIn: 'root',
 })
 export class UsersService {
-  private userUrl = `${environment.loginUrl}api/user`;
   private limitPerPage = 5;
   public users: User[] = [];
+  private userUrl = `${environment.loginUrl}api/user`;
+
   constructor(private http: HttpClient, private errorHandler: ErrorService) {}
 
   async getUsers(page: number): Promise<User[] | []> {
@@ -26,10 +22,13 @@ export class UsersService {
       const params = new HttpParams({
         fromObject: { page, limit: this.limitPerPage },
       });
+
       const response = (await firstValueFrom(
         this.http.get(this.userUrl, { params })
       )) as ApiUserResponse;
+
       this.users = response.users;
+
       return response.users;
     } catch (err) {
       this.errorHandler.handleError(err as ErrorResponse);
@@ -40,9 +39,11 @@ export class UsersService {
   async delete(id: string) {
     try {
       const urlDelete = `${this.userUrl}/${id}`;
+
       const response = (await firstValueFrom(
         this.http.delete(urlDelete)
       )) as ApiUserPostReponse;
+
       return response;
     } catch (err) {
       this.errorHandler.handleError(err as ErrorResponse);
@@ -55,6 +56,7 @@ export class UsersService {
       const response = (await firstValueFrom(
         this.http.post(this.userUrl, user)
       )) as ApiUserPostReponse;
+
       return response;
     } catch (err) {
       this.errorHandler.handleError(err as ErrorResponse);
@@ -64,10 +66,12 @@ export class UsersService {
 
   async editUser(user: User): Promise<ApiUserPostReponse> {
     try {
-      const urlPut = `${this.userUrl}/${user._id}`;
+      const urlPut = `${this.userUrl}/${user.id}`;
+
       const response = (await firstValueFrom(
         this.http.put(urlPut, { props: user })
       )) as ApiUserPostReponse;
+      
       return response;
     } catch (err) {
       console.log(err);

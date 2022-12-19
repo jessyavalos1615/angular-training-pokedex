@@ -1,6 +1,10 @@
+import { Store } from '@ngrx/store';
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+
+import { logout } from 'src/app/store/actions/login/login.actions';
 import { ShowModalService } from 'src/app/services/show-modal.service';
+import { loginStateTypes } from '../../store/initialState/login/login.state';
 
 @Component({
   selector: 'app-header',
@@ -8,56 +12,27 @@ import { ShowModalService } from 'src/app/services/show-modal.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  isLogIn: boolean = false;
+  isAdmin: boolean = false;
   constructor(
-    private authService: AuthService,
-    private showModal: ShowModalService
-  ) {}
-
-  ngOnInit(): void {
-    // console.log('ngOnInit');
+    private router: Router,
+    private showModal: ShowModalService,
+    private store: Store<{ loginState: loginStateTypes }>
+  ) {
+    this.store.select('loginState').subscribe((state) => {
+      this.isLogIn = state.isLogin;
+      this.isAdmin = state.isAdmin;
+    });
   }
 
-  /* ngOnChanges(): void {
-    console.log('ngOnChanges');
-  }
-
-  ngDoCheck(): void {
-    console.log('ngDoCheck');
-  }
-
-  ngAfterContentInit(): void {
-    console.log('ngAfterContentInit');
-  }
-
-  ngAfterContentChecked(): void {
-    console.log('ngAfterContentChecked');
-  }
-  
-  ngAfterViewInit(): void {
-    console.log('ngAfterViewInit');
-  }
-  
-  ngAfterViewChecked(): void {
-    console.log('ngAfterViewChecked');
-  }
-  
-  ngOnDestroy(): void {
-    console.log('ngOnDestroy');
-  } */
+  ngOnInit(): void {}
 
   add(): void {
     this.showModal.changeState(true);
   }
 
-  isAdmin(): boolean {
-    return this.isLoggedIn() && this.authService.checkAdmin();
-  }
-
-  isLoggedIn(): boolean {
-    return this.authService.isLoggedIn();
-  }
-
   logout(): void {
-    this.authService.logout();
+    this.store.dispatch(logout());
+    this.router.navigateByUrl('/login');
   }
 }

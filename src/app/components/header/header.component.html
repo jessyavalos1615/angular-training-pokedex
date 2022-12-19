@@ -1,6 +1,6 @@
 <!-- Header -->
 <header>
     <h1>Pokedex</h1>
-    <button class="button" (click)="add()" *ngIf="isAdmin()">Add Pokemon</button>
-    <button class="button" (click)="logout()" *ngIf="isLoggedIn()">Logout</button>
+    <button class="button" (click)="add()" *ngIf="isAdmin">Add Pokemon</button>
+    <button class="button" (click)="logout()" *ngIf="isLogIn">Logout</button>
 </header> <!-- End Header -->

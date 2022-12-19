@@ -1,9 +1,12 @@
-<pagination-controls (pageChange)="page = $event; pokemons = []; getPokemons()"></pagination-controls>
+<pagination-controls *ngIf="hasPokemons" (pageChange)="page = $event; pokemons = []; getPokemons()">
+</pagination-controls>
 <!-- Pokemon Grind -->
 <div class="pokemon-grid">
   <app-pokemon [pokemon]="pokemon"
     *ngFor="let pokemon of pokemons | paginate : { itemsPerPage: 10, currentPage: page, totalItems: totalPokemons }">
   </app-pokemon>
+
+  <span class="non-pokemons" *ngIf="!hasPokemons">Aun no hay pokemons</span>
 </div>
 <!-- End Pokemon Grid -->
 

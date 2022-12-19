@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
@@ -6,18 +8,23 @@ import {
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
-import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { LocalStorageService } from '../services/local-storage-tokens.service';
+
+import { loginStateTypes } from '../store/initialState/login/login.state';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
+  token: string = '';
+
   constructor(
-    private localStorage: LocalStorageService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private store: Store<{ loginState: loginStateTypes }>
+  ) {
+    this.store.select('loginState').subscribe((state) => {
+      this.token = state.token!;
+    });
+  }
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -27,11 +34,12 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (this.localStorage.get(environment.jwtKey)) {
+    if (this.token !== '') {
       return true;
     }
 
     this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+
     return false;
   }
 }

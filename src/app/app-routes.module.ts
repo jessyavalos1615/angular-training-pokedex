@@ -7,15 +7,19 @@ import { SignupComponent } from './components/signup/signup.component';
 import { PokemonListComponent } from './components/pokemon-list/pokemon-list.component';
 
 const routes: Routes = [
-    { path: 'login', component: LoginComponent },
-    { path: 'signup', component: SignupComponent },
-    { path: 'pokemons', component: PokemonListComponent, canActivate: [AuthGuard] },
-    { path: '**', redirectTo: 'pokemons' }
-  ];
-  
-  @NgModule({
-    declarations: [],
-    imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule]
-  })
-  export class AppRoutingModule { }
+  { path: 'login', component: LoginComponent },
+  { path: 'signup', component: SignupComponent },
+  {
+    path: 'pokemons',
+    component: PokemonListComponent,
+    canActivate: [AuthGuard],
+  },
+  { path: '**', redirectTo: 'pokemons' },
+];
+
+@NgModule({
+  declarations: [],
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
+})
+export class AppRoutingModule {}

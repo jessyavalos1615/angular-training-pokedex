@@ -1,6 +1,7 @@
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { TestBed } from '@angular/core/testing';
 import { RouterModule } from '@angular/router';
+import { TestBed } from '@angular/core/testing';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { HeadersInterceptor } from './interceptors/headers.interceptors';

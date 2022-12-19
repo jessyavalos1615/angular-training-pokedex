@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Injectable } from '@angular/core';
 
 import { ErrorResponse } from 'src/app/models/errors';
 import { environment } from 'src/environments/environment';
@@ -10,14 +10,15 @@ import { LocalStorageService } from './local-storage-tokens.service';
 })
 export class ErrorService {
   constructor(
-    private localStorage: LocalStorageService,
-    private router: Router
+    private router: Router,
+    private localStorage: LocalStorageService
   ) {}
 
   public redirectToLogin() {
-    this.localStorage.delete(environment.jwtKey);
     this.router.navigateByUrl('/login');
+    this.localStorage.delete(environment.jwtKey);
   }
+
   public handleError({ error }: ErrorResponse) {
     if (error.message === 'Invalid token.') {
       this.redirectToLogin();

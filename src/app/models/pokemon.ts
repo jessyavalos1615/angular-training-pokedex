@@ -27,4 +27,5 @@ interface Types {
 
 export interface ApiPokemonResponse extends Response {
   pokemons: { name: string; id: number }[];
+  totalPages: number;
 }
